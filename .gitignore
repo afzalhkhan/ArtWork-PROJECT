@@ -1,0 +1,56 @@
+.env
+.venv
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Data & Databases
+*.xlsx
+*.csv
+*.npy
+*.db
+*.sqlite
+
+# ML Models & Cache
+*.pt
+*.pth
+*.bin
+*.safetensors
+.cache/
+huggingface/
+
+# Datasets
+datasets/
+data/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Flask
+instance/
+flask_session/
+
+# JWT / Secrets
+secret_key.txt
+.python-version
+uv.lock
