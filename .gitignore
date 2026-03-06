@@ -54,3 +54,9 @@ flask_session/
 secret_key.txt
 .python-version
 uv.lock
+
+node_modules/
+WEBDEV/package-lock.json
+WEBDEV/package-lock.json
+package-lock.json
+WEBDEV/package-lock.json
