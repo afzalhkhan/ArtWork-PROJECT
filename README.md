@@ -178,39 +178,6 @@ The frontend will run on:
 http://localhost:3000
 ```
 
----
-
-# Project Structure
-
-```
-ARTWORK-DL-PROJECT
-│
-├── server
-│   ├── server.py
-│   ├── generate_embeddings.py
-│   ├── combined_embeddings.npy
-│   ├── users.xlsx
-│   ├── user_likes.xlsx
-│   ├── user_embeddings.xlsx
-│   └── image_likes.xlsx
-│
-├── frontend
-│   ├── package.json
-│   ├── public
-│   │   ├── index.html
-│   │   └── manifest.json
-│   │
-│   └── src
-│       ├── App.js
-│       ├── Components
-│       ├── Pages
-│       └── index.js
-│
-└── README.md
-```
-
----
-
 # Running the Application
 
 Start backend:
