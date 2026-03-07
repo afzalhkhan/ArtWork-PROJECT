@@ -1,140 +1,255 @@
+# Artwork Recommendation System
+
 ## Overview
-A hybrid recommendation system combining Flask backend with React frontend. Features include various filtering techniques, a chatbot interface, and a social media-like user experience.
 
-## Features
-- **Backend**: Flask APIs implementing hybrid recommendation algorithms
-- **Frontend**: React-based dynamic user interface
-- **Recommendation Algorithms**: 
-  - Collaborative filtering
-  - Content-based filtering
-  - NCF Based Hybrid system
-- **Interactive UI**: User-friendly interface with comments, profiles, and home feed
-- **Data Processing**: Pandas and NumPy integration
-- **Machine Learning**: PyTorch and Transformers for recommendation models
+A hybrid artwork recommendation system combining a **Flask backend** with a **React frontend**.
+The system provides personalized artwork recommendations using deep learning models and hybrid recommendation techniques.
 
-## Prerequisites
+The application also includes a **chatbot interface**, **user profiles**, and a **social-media-style feed** for interacting with artworks.
 
-### Backend Requirements
-- Python 3.7 or higher
-- Required Python packages:
-  ```bash
-  pip install flask pandas python-dotenv transformers numpy torch datasets scikit-learn scipy
-  ```
+---
 
-### Frontend Requirements
-- Node.js (16.x or later recommended)
-- NPM (comes with Node.js)
+# Features
 
-## Installation
+### Backend
 
-Make A File Under This Folder, Like This :
-WEBDEV/server/combined_embeddings.npy
+* Flask REST API
+* Hybrid recommendation engine
+* Image + text embedding generation
+* JWT authentication
+* Trending artwork detection
+* User interaction tracking (likes)
 
-Download File From Here :
+### Frontend
+
+* React-based UI
+* Chatbot interface
+* Artwork feed
+* User profile system
+* Liked artworks page
+
+### Recommendation System
+
+The backend combines multiple approaches:
+
+* Content-based filtering (CLIP embeddings)
+* Collaborative filtering (user-item interactions)
+* Hybrid recommendation system
+* Image captioning using BLIP
+
+### Machine Learning
+
+* CLIP (OpenAI) for image/text embeddings
+* BLIP for image captioning
+* Cosine similarity for recommendation ranking
+
+---
+
+# Technologies Used
+
+## Backend
+
+* Python
+* Flask
+* PyTorch
+* Transformers
+* Pandas
+* NumPy
+* Scikit-learn
+* SciPy
+* Datasets (HuggingFace)
+
+## Frontend
+
+* React.js
+* Node.js
+* NPM
+
+---
+
+# Prerequisites
+
+### Backend
+
+* Python **3.10+**
+* **uv** package manager
+
+Install uv if you don't have it:
+
+```bash
+pip install uv
+```
+
+### Frontend
+
+* Node.js **16+**
+* NPM
+
+---
+
+# Installation
+
+## Download Embeddings File
+
+Create this folder:
+
+```
+server/
+```
+
+Then place the embeddings file inside it:
+
+```
+server/combined_embeddings.npy
+```
+
+Download the file from:
+
 https://drive.google.com/file/d/1tsCP3zYCchn2MkGmqhdbIKWG4x9PU28Y/view
 
-### Backend Setup
+---
 
-1. Create and activate virtual environment:
+# Backend Setup
+
+### 1. Create virtual environment
+
 ```bash
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On Unix or MacOS:
-source venv/bin/activate
+uv venv
 ```
 
-2. Install dependencies:
+Activate environment:
+
+**Linux / Mac**
+
 ```bash
-pip install flask pandas python-dotenv transformers numpy torch datasets scikit-learn scipy
+source .venv/bin/activate
 ```
 
-3. Start Flask server:
+**Windows**
+
 ```bash
+.venv\Scripts\activate
+```
+
+---
+
+### 2. Install dependencies
+
+```bash
+uv pip install flask pandas python-dotenv transformers numpy torch datasets scikit-learn scipy pillow requests pyjwt flask-cors openpyxl
+```
+
+---
+
+### 3. Run backend server
+
+```bash
+cd server
 python server.py
 ```
 
-### Frontend Setup
+The backend will run on:
 
-1. Navigate to frontend directory:
-```bash
-cd WEBDEV
+```
+http://localhost:5000
 ```
 
-2. Install dependencies:
+---
+
+# Frontend Setup
+
+### 1. Navigate to frontend
+
+```bash
+cd frontend
+```
+
+### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
-3. Start React development server:
+### 3. Start development server
+
 ```bash
 npm start
 ```
 
-## Project Structure
+The frontend will run on:
+
 ```
-.
-├── NCF_hybrid_recommendation.py
-├── chatbotrecommender.ipynb
-├── collaborative_filtering.py
-├── content_based_filtering.py
-├── embedding_based_hybrid_filtering.py
-├── file_loader.py
-├── WEBDEV
+http://localhost:3000
+```
+
+---
+
+# Project Structure
+
+```
+ARTWORK-DL-PROJECT
+│
+├── server
+│   ├── server.py
+│   ├── generate_embeddings.py
+│   ├── combined_embeddings.npy
+│   ├── users.xlsx
+│   ├── user_likes.xlsx
+│   ├── user_embeddings.xlsx
+│   └── image_likes.xlsx
+│
+├── frontend
 │   ├── package.json
 │   ├── public
 │   │   ├── index.html
 │   │   └── manifest.json
-│   ├── server
-│   │   ├── server.py
-│   │   ├── user_likes.xlsx
-│   │   └── image_likes.xlsx
+│   │
 │   └── src
 │       ├── App.js
 │       ├── Components
-│       │   ├── Home
-│       │   │   ├── Homepage.js
-│       │   │   └── Feedposts.js
 │       ├── Pages
-│       │   └── Home
-│       │       ├── Home.js
-│       │       └── Chatbot.jsx
 │       └── index.js
+│
+└── README.md
 ```
 
-## Technologies Used
+---
 
-### Backend
-- Flask
-- Python libraries:
-  - pandas
-  - python-dotenv
-  - transformers
-  - numpy
-  - PyTorch
-  - datasets
-  - scikit-learn
-  - scipy
+# Running the Application
 
-### Frontend
-- React.js
-- Node.js
-- NPM packages (defined in package.json)
+Start backend:
 
-## Getting Started
+```
+cd server
+python server.py
+```
 
-1. Clone the repository
-2. Follow the Backend Setup instructions
-3. Follow the Frontend Setup instructions
-4. Access the application at `http://localhost:3000`
+Start frontend:
 
-## Notes
-- Ensure all required Python packages are installed before running the backend
-- The frontend development server runs on port 3000 by default
-- The Flask backend server should be running simultaneously with the frontend
+```
+cd frontend
+npm run build
+npm start
+```
 
-# DEMO 
-https://drive.google.com/file/d/1d9XqGEEgRTkqlYxNz-tHt-RkJrIK2Qbz/view?usp=sharing
+Then open:
+
+```
+http://localhost:3000
+```
+
+---
+
+# Demo
+
+Video demonstration:
+
+https://drive.google.com/file/d/1d9XqGEEgRTkqlYxNz-tHt-RkJrIK2Qbz/view
+
+---
+
+# Notes
+
+* Backend must be running before using the frontend
+* Ensure `combined_embeddings.npy` is placed inside the **server** folder
+* The frontend communicates with the Flask API running on **port 5000**
