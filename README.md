@@ -57,7 +57,7 @@ The backend combines multiple approaches:
 * NumPy
 * Scikit-learn
 * SciPy
-* Datasets (HuggingFace)
+* HuggingFace Datasets
 
 ## Frontend
 
@@ -74,8 +74,6 @@ The backend combines multiple approaches:
 * Python **3.10+**
 * **uv** package manager
 
-Install uv if you don't have it:
-
 ### Frontend
 
 * Node.js **16+**
@@ -83,23 +81,47 @@ Install uv if you don't have it:
 
 ---
 
+# Installing uv
+
+Install **uv** depending on your operating system.
+
+### Linux / macOS
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Restart the terminal and verify:
+
+```bash
+uv --version
+```
+
+### Windows (PowerShell)
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Restart the terminal and verify:
+
+```powershell
+uv --version
+```
+
+---
+
 # Installation
 
 ## Download Embeddings File
 
-Create this folder:
+Place the embeddings file in the **project root**:
 
 ```
-server/
+combined_embeddings.npy
 ```
 
-Then place the embeddings file inside it:
-
-```
-server/combined_embeddings.npy
-```
-
-Download the file from:
+Download from:
 
 https://drive.google.com/file/d/1tsCP3zYCchn2MkGmqhdbIKWG4x9PU28Y/view
 
@@ -107,44 +129,25 @@ https://drive.google.com/file/d/1tsCP3zYCchn2MkGmqhdbIKWG4x9PU28Y/view
 
 # Backend Setup
 
-### 1. Create virtual environment
+---
+
+### 1. Install dependencies
 
 ```bash
-uv venv
-```
-
-Activate environment:
-
-**Linux / Mac**
-
-```bash
-source .venv/bin/activate
-```
-
-**Windows**
-
-```bash
-.venv\Scripts\activate
+uv sync
 ```
 
 ---
 
-### 2. Install dependencies
+### 2. Run backend server
+
+From the project root:
 
 ```bash
-uv pip install flask pandas python-dotenv transformers numpy torch datasets scikit-learn scipy pillow requests pyjwt flask-cors openpyxl
+uv run server.py
 ```
 
----
-
-### 3. Run backend server
-
-```bash
-cd server
-python server.py
-```
-
-The backend will run on:
+Backend runs on:
 
 ```
 http://localhost:5000
@@ -154,37 +157,76 @@ http://localhost:5000
 
 # Frontend Setup
 
-### 1. Navigate to frontend
+Navigate to frontend folder:
 
 ```bash
 cd frontend
 ```
 
-### 2. Install dependencies
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### 3. Start development server
+Start development server:
 
 ```bash
 npm start
 ```
 
-The frontend will run on:
+Frontend runs on:
 
 ```
 http://localhost:3000
 ```
+
+---
+
+# Project Structure
+
+```
+ARTWORK-DL-PROJECT
+│
+├── frontend
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   │
+│   └── src
+│       ├── Components
+│       ├── Pages
+│       ├── assets
+│       ├── context
+│       ├── Data
+│       ├── App.js
+│       ├── index.js
+│       └── index.css
+│
+├── server.py
+├── generate_embeddings.py
+├── combined_embeddings.npy
+├── users.xlsx
+├── user_likes.xlsx
+├── user_embeddings.xlsx
+├── image_likes.xlsx
+│
+├── pyproject.toml
+├── uv.lock
+└── README.md
+```
+
+---
 
 # Running the Application
 
 Start backend:
 
 ```
-cd server
-python server.py
+uv run server.py
 ```
 
 Start frontend:
@@ -213,6 +255,7 @@ https://drive.google.com/file/d/1d9XqGEEgRTkqlYxNz-tHt-RkJrIK2Qbz/view
 
 # Notes
 
-* Backend must be running before using the frontend
-* Ensure `combined_embeddings.npy` is placed inside the **server** folder
-* The frontend communicates with the Flask API running on **port 5000**
+* The backend must be running before using the frontend.
+* Ensure `combined_embeddings.npy` is placed in the **project root**.
+* The React frontend communicates with the Flask API running on **port 5000**.
+* `node_modules` and `.venv` should be ignored in version control.
