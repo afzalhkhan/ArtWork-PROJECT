@@ -27,11 +27,17 @@ def display_image(image_data):
     # Function to display images (not used in backend)
     pass
 
-def generate_image_caption(image, blip_model, blip_processor, device, max_new_tokens=50):
-    inputs = blip_processor(images=image, return_tensors="pt").to(device)
+def generate_image_caption(image, model, processor, device):
+    """
+    Generate a caption for the given image using BLIP.
+    """
+    inputs = processor(images=image, return_tensors="pt").to(device)
+
     with torch.no_grad():
-        out = blip_model.generate(**inputs, max_new_tokens=max_new_tokens)
-    caption = blip_processor.decode(out[0], skip_special_tokens=True)
+        output = model.generate(**inputs, max_length=50)
+
+    caption = processor.tokenizer.decode(output[0], skip_special_tokens=True)
+
     return caption
 
 def generate_explanation(user_text, curr_metadata, sim_image, sim_text):
@@ -503,7 +509,6 @@ def like_image(current_user_email):
                 # Compute average of accumulated embeddings
                 average_embedding = accumulated_embedding / likes_since_last_update
                 # Normalize average_embedding
-                norm = np.linalg.norm(average_embedding)
                 if norm != 0:
                     average_embedding = average_embedding / norm
                 else:
@@ -955,16 +960,25 @@ def predict(text, image_data=None):
     print("Preprocessed inputs for CLIP.")
 
     with torch.no_grad():
+        import torch.nn.functional as F
+
         if input_image:
-            image_features = clip_model.get_image_features(pixel_values=inputs['pixel_values'])
-            image_features = image_features / image_features.norm(p=2, dim=-1, keepdim=True)
-            image_features_np = image_features.cpu().detach().numpy()
+            vision_outputs = clip_model.vision_model(pixel_values=inputs['pixel_values'])
+            pooled = vision_outputs.pooler_output
+            projected = clip_model.visual_projection(pooled)
+            image_features = F.normalize(projected, p=2, dim=-1)
+            image_features_np = image_features.cpu().numpy()
         else:
             image_features_np = np.zeros((1, clip_model.config.projection_dim))
 
-        text_features = clip_model.get_text_features(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'])
-        text_features = text_features / text_features.norm(p=2, dim=-1, keepdim=True)
-        text_features_np = text_features.cpu().detach().numpy()
+        text_outputs = clip_model.text_model(
+            input_ids=inputs['input_ids'],
+            attention_mask=inputs['attention_mask']
+        )
+        text_pooled = text_outputs.pooler_output
+        text_projected = clip_model.text_projection(text_pooled)
+        text_features = F.normalize(text_projected, p=2, dim=-1)
+        text_features_np = text_features.cpu().numpy()
     print("Generated and normalized image and text features using CLIP.")
 
     weight_img = 0.1
