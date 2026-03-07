@@ -76,10 +76,6 @@ The backend combines multiple approaches:
 
 Install uv if you don't have it:
 
-```bash
-pip install uv
-```
-
 ### Frontend
 
 * Node.js **16+**
